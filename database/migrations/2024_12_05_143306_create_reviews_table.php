@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+	{
+		Schema::create('reviews', function (Blueprint $table) {
+			$table->id();
+			$table->foreignId('book_id')->constrained();  // Zakłada, że masz tabelę 'books'
+			$table->string('name');
+			$table->tinyInteger('rating');  // Ocena od 1 do 5
+			$table->text('review');
+			$table->timestamps();
+		});
+	}	
+
+	public function book()
+	{
+		return $this->belongsTo(Book::class);
+	}
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('reviews');
+    }
+};

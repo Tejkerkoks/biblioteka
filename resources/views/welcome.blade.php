@@ -22,5 +22,45 @@
     <body class="font-sans antialiased dark:bg-black dark:text-white/50">
 		<div id="app"></div>
 			@vite('resources/js/app.js')
+			@extends('layouts.app')
+
+@section('content')
+    <div>
+        <h1>{{ $book->title }} - Recenzje</h1>
+
+        <form action="{{ route('reviews.store', $book->id) }}" method="POST">
+            @csrf
+            <div>
+                <label for="name">Twoje imię:</label>
+                <input type="text" name="name" id="name" required>
+            </div>
+            <div>
+                <label for="rating">Ocena:</label>
+                <select name="rating" id="rating" required>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <div>
+                <label for="review">Recenzja:</label>
+                <textarea name="review" id="review" rows="4" required></textarea>
+            </div>
+            <button type="submit">Dodaj recenzję</button>
+        </form>
+
+        <h2>Recenzje:</h2>
+        <ul>
+            @foreach ($book->reviews as $review)
+                <li>
+                    <strong>{{ $review->name }}</strong> (Ocena: {{ $review->rating }})<br>
+                    {{ $review->review }}
+                </li>
+            @endforeach
+        </ul>
+    </div>
+@endsection
     </body>
 </html>

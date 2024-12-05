@@ -20,6 +20,10 @@ return new class extends Migration
 			$table->timestamps();
 		});
 	}
+	public function reviews()
+	{
+		return $this->hasMany(Review::class);
+	}
     /**
      * Reverse the migrations.
      */
